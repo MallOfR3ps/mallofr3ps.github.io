@@ -150,7 +150,7 @@ function cats(){return [...new Set(CATALOG.map(p=>p.kategorie).filter(Boolean))]
 function render(){
   const open=st.open||unlocked();
   const g=document.getElementById('gate');document.querySelector('.tabs').hidden=!open;document.getElementById('main').hidden=!open;
-  if(!open){g.hidden=false;if(!g.firstChild)g.innerHTML=`<form class="card gatebox" id="gf" novalidate><h2>Willkommen</h2><p class="note">Dieser Shop ist nur für Kunden von MallOfR3ps. Gib das Passwort ein, das du von uns bekommen hast.</p><div class="f s6"><label for="g_pw">Passwort</label><input id="g_pw" name="pw" type="password" autocomplete="current-password" autofocus></div><div id="gerr" class="err" role="alert"></div><button class="btn solid" type="submit">Eintreten</button><p class="note">Noch kein Passwort? Schreib uns auf <a href="https://ig.me/m/${SHOP.insta}" target="_blank" rel="noopener" style="color:inherit">Instagram @${SHOP.insta}</a>.</p></form>`;return}
+  if(!open){g.hidden=false;if(!g.firstChild)g.innerHTML=`<form class="card gatebox" id="gf" novalidate><h2>Willkommen</h2><p class="note">Dieser Shop ist nur für Kunden von MallOfR3ps. Gib das Passwort ein, das du von uns bekommen hast.</p><div class="f s6"><label for="g_pw">Passwort</label><input id="g_pw" name="pw" type="password" autocomplete="current-password" autofocus></div><div id="gerr" class="err" role="alert"></div><button class="btn solid" type="submit">Eintreten</button><p class="note">Noch kein Passwort? Schreib uns auf <a href="https://www.instagram.com/${SHOP.insta}/" target="_blank" rel="noopener" style="color:inherit">Instagram @${SHOP.insta}</a>.</p></form>`;return}
   g.hidden=true;g.innerHTML='';renderTabs();renderMain()}
 function renderTabs(){
   const n=cartCount();const t=[['katalog','Katalog'],['bestellen','Bestellen'+(n?`<span class="n">${n}</span>`:'')]];
@@ -164,7 +164,7 @@ function renderMain(){
 function matches(p){const q=st.q.toLowerCase().trim();if(st.cat!=='alle'&&p.kategorie!==st.cat)return false;if(!q)return true;return [p.marke,p.name,p.kategorie,p.beschreibung,...vars(p).map(v=>v.farbe)].join(' ').toLowerCase().includes(q)}
 function viewCatalog(){
   if(!st.loaded)return `<p class="note" style="text-align:center">Katalog wird geladen …</p>`;
-  if(!CATALOG.length)return `<div class="empty"><h2>Der Katalog kommt bald</h2><p style="margin:0;max-width:42ch">Du suchst etwas Bestimmtes? Beschreib dein Wunschprodukt unter «Bestellen» oder schick uns ein Foto auf Instagram.</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn solid" data-a="tab" data-k="bestellen">Wunschprodukt bestellen</button><a class="btn" href="https://ig.me/m/${SHOP.insta}" target="_blank" rel="noopener">Instagram</a></div></div>`;
+  if(!CATALOG.length)return `<div class="empty"><h2>Der Katalog kommt bald</h2><p style="margin:0;max-width:42ch">Du suchst etwas Bestimmtes? Beschreib dein Wunschprodukt unter «Bestellen» oder schick uns ein Foto auf Instagram.</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn solid" data-a="tab" data-k="bestellen">Wunschprodukt bestellen</button><a class="btn" href="https://www.instagram.com/${SHOP.insta}/" target="_blank" rel="noopener">Instagram</a></div></div>`;
   const c=cats();const items=CATALOG.filter(matches);
   return `<div class="bar"><input id="q" class="search" type="search" placeholder="Suche nach Marke, Produkt oder Farbe" aria-label="Produkte suchen">${c.length>1?`<div class="chips">${['alle',...c].map(k=>`<button class="chip" data-a="cat" data-k="${esc(k)}" aria-pressed="${st.cat===k}">${k==='alle'?'Alle':esc(k)}</button>`).join('')}</div>`:''}</div>
   <div class="grid" id="grid">${items.map(card).join('')||'<p class="note">Nichts gefunden.</p>'}</div>
@@ -269,7 +269,7 @@ async function submitOrder(form){
   let ownerOk=false;
   try{await sendMail({to_email:SHOP.mail,reply_to:o.email,subject:`Neue Bestellung ${o.nr} – ${o.vorname} ${o.nachname}`,html:ownerHtml(o)});ownerOk=true}catch(e){console.warn('Bestellung',e)}
   st.sending=false;
-  if(!ownerOk&&!confOk){renderMain();document.getElementById('oerr').innerHTML=`Die Bestellung konnte gerade nicht gesendet werden. Versuch es in einer Minute nochmals, oder schick uns deine Bestellung per Instagram an <a href="https://ig.me/m/${SHOP.insta}" target="_blank" rel="noopener">@${SHOP.insta}</a>.`;return}
+  if(!ownerOk&&!confOk){renderMain();document.getElementById('oerr').innerHTML=`Die Bestellung konnte gerade nicht gesendet werden. Versuch es in einer Minute nochmals, oder schick uns deine Bestellung per Instagram an <a href="https://www.instagram.com/${SHOP.insta}/" target="_blank" rel="noopener">@${SHOP.insta}</a>.`;return}
   st.order=o;st.cart=[];saveCart();render();window.scrollTo(0,0);
 }
 /* ---- events ---- */
